@@ -1,0 +1,5 @@
+
+── Persistence Data ────────────────────────────────────────────────────────────
+ℹ There are 3 pairs in dimension 0 respectively.
+ℹ Computed from a Complete-Linkage filtration using `stats::hclust()`.
+! With unknown parameters.

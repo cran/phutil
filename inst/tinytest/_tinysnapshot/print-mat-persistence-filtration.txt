@@ -1,0 +1,6 @@
+
+── Persistence Data ────────────────────────────────────────────────────────────
+ℹ There are 99 and 2 pairs in dimensions 0 and 1 respectively.
+ℹ Computed from a Vietoris-Rips filtration.
+! Computation engine is unknown.
+! With unknown parameters.

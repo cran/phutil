@@ -1,0 +1,5 @@
+
+── Persistence Data ────────────────────────────────────────────────────────────
+ℹ There are 100 and 2 pairs in dimensions 0 and 1 respectively.
+ℹ Computed from a Vietoris-Rips filtration using `TDA::ripsDiag()`.
+ℹ With the following parameters: maxdimension = 1 and maxscale = 1.6322.

@@ -1,0 +1,6 @@
+
+── Persistence Data ────────────────────────────────────────────────────────────
+ℹ There are 99 and 2 pairs in dimensions 0 and 1 respectively.
+ℹ Computed using `ripserr::vietoris_rips()`.
+! Filtration is unknown.
+ℹ With the following parameters: maxdimension = 1 and maxscale = 1.6322.
