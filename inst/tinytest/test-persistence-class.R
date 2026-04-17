@@ -1,6 +1,6 @@
 using("tinysnapshot")
 
-opts <- options(cli.width = 80)
+opts <- options(cli.width = 80, cli.hyperlink = FALSE)
 
 m <- as.matrix(noisy_circle_ripserr)
 
@@ -121,6 +121,14 @@ expect_message(
   pattern = "Negative, infinite, and missing dimensions will be omitted."
 )
 
+# Test that as_persistence() locates births and deaths in columns 2 and 3
+x <- TDA::gridDiag(FUNvalues = volcano, sublevel = FALSE)
+expect_message(p <- as_persistence(x), pattern = "[Bb]irth")
+expect_equal(p$pairs[[1]][, 1], x$diagram[x$diagram[, 1] == 0, 3])
+expect_equal(p$pairs[[1]][, 2], x$diagram[x$diagram[, 1] == 0, 2])
+expect_equal(p$pairs[[2]][, 1], unname(x$diagram[x$diagram[, 1] == 1, 3]))
+expect_equal(p$pairs[[2]][, 2], unname(x$diagram[x$diagram[, 1] == 1, 2]))
+
 # Test that as_persistence() errors out if provided with a matrix with
 # less than 2 columns
 x <- matrix(1:6, ncol = 1)
@@ -160,5 +168,27 @@ expect_inherits(xm, "matrix")
 expect_equal(xm[, "dimension"], c(0L, 0L, 1L, 1L))
 expect_equal(xm[, "birth"], c(0, 1, 0, 1))
 expect_equal(xm[, "death"], c(2, 3, 2, 3))
+
+# Test that as_diagram() works
+
+x <- cbind(x = runif(6), y = runif(6))
+
+d <- TDA::alphaComplexDiag(x, maxdimension = 2)
+p <- as_persistence(d)
+expect_true(is.list(as_diagram(p)))
+expect_true(!is.list(as_diagram(p, list = FALSE)))
+expect_identical(as_diagram(p), d)
+
+d <- TDA::ripsDiag(x, maxdimension = 2, maxscale = 1.5)
+p <- as_persistence(d)
+expect_true(is.list(as_diagram(p)))
+expect_true(!is.list(as_diagram(p, list = FALSE)))
+expect_identical(as_diagram(p), d)
+
+if (requireNamespace("ripserr", quietly = TRUE)) {
+  h <- ripserr::cubical(volcano)
+  expect_true(is.list(as_diagram(h)))
+  expect_true(!is.list(as_diagram(h, list = FALSE)))
+}
 
 options(opts)

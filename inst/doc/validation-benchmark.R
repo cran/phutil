@@ -1,7 +1,8 @@
 ## -----------------------------------------------------------------------------
 #| label: setup
+#| include: false
 library(phutil)
-library(ggplot2)
+init_par <- par()
 
 
 ## ----define small PDs---------------------------------------------------------
@@ -29,7 +30,7 @@ abline(a = 0, b = 1)
 points(X, pch = 1)
 points(Y, pch = 5)
 segments(X[, 1], X[, 2], c(2, Y[, 1]), c(2, Y[, 2]), lty = 2)
-par(oldpar)
+par(mar = init_par$mar)
 
 
 ## ----validate small PDs with Hera---------------------------------------------
@@ -134,23 +135,36 @@ bm_all <- do.call(rbind, bm_all)
 ## -----------------------------------------------------------------------------
 #| label: fig-benchmark-large
 #| fig-width: 8
-#| fig-height: 3
+#| fig-height: 4
 #| fig-align: 'center'
 #| fig-retina: 2
 #| fig-cap: "Benchmark comparison of Dionysus via {TDA} and Hera via {phutil} on
-#| large persistence diagrams: Violin plots of runtime distributions on a common
-#| scale."
-bm_all <- transform(bm_all, expr = as.character(expr), time = unlist(time))
+#| large persistence diagrams: Jitter plots of runtime distributions
+#| (time measured in seconds)."
+bm_all <- transform(
+  bm_all,
+  expr = factor(as.character(expr), levels = c("TDA", "phutil")),
+  time = unlist(time) * 10e-9
+)
 bm_all <- subset(bm_all, select = c(expr, degree, power, time))
-ggplot(bm_all, aes(x = time * 10e-9, y = expr)) +
-  facet_grid(
-    rows = vars(power), cols = vars(degree),
-    labeller = label_both
-  ) +
-  geom_violin() +
-  scale_x_continuous(
-    transform = "log10",
-    labels = scales::label_timespan(units = "secs")
-  ) +
-  labs(x = NULL, y = NULL)
+xrans <- lapply(seq(0, 2), function(d) range(subset(bm_all, degree == d, time)))
+par(mfcol = c(3, 3), mar = c(2, 2, 2, 2) + .1)
+for (d in seq(0, 2)) for (p in c(1, 2, Inf)) {
+  bm_d_p <- subset(bm_all, degree == d & power == p)
+  plot(
+    x = bm_d_p$time, xlim = xrans[[d + 1]],
+    y = jitter(as.integer(bm_d_p$expr)), yaxt = "n",
+    pch = 19
+  )
+  axis(2, at = c(1, 2), labels = levels(bm_d_p$expr))
+  if (p == 1) axis(
+    3, at = mean(xrans[[d+1]]),
+    tick = FALSE, labels = paste("degree: ", d), padj = 0
+  )
+  if (d == 2) axis(
+    4, at = 1.5,
+    tick = FALSE, labels = paste("power: ", p), padj = 0
+  )
+}
+par(mfcol = init_par$mfcol)
 

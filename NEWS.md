@@ -1,3 +1,34 @@
+# phutil 0.0.2
+
+## New features
+
+- New `as_diagram()` generic and methods for `persistence` and `PHom` classes,
+  enabling round-trip conversion back to the `diagram` class used by
+  [{TDA}](https://cran.r-project.org/package=TDA) (#53).
+
+## Bug fixes
+
+- `as_persistence.diagram()` now correctly handles `diagram` objects whose
+  `Birth` and `Death` columns appear in a different order, which can occur with
+  some {TDA} filtrations (#52).
+- Graphics options are now properly restored to the user's original settings
+  after being temporarily changed (#41).
+
+## Minor improvements
+
+- {TDA} functions are now called with explicit `TDA::` namespace prefixes and
+  `print.progress = FALSE` for cleaner output (#41).
+- Tests for {ripserr} integration are now run conditionally on {ripserr} being
+  installed, removing it as a hard suggested dependency (#41).
+- The vignette no longer requires {ggplot2} or {scales}, reducing optional
+  dependencies for building the documentation (#46, closes #45).
+- Vendored {cpp11} headers have been removed; the package now relies on the
+  {cpp11} headers provided by the installed package, allowing it to benefit from
+  updated versions. The `NO_LEGACY_NONAPI` flag is set to comply with the R API
+  going forward (#55).
+- Package description updated with references to the distance methods
+  implemented (#41).
+
 # phutil 0.0.1
 
 This is a new submission to CRAN.

@@ -15,6 +15,9 @@
 \alias{get_pairs}
 \alias{as.matrix.persistence}
 \alias{as.data.frame.persistence}
+\alias{as_diagram}
+\alias{as_diagram.persistence}
+\alias{as_diagram.PHom}
 \title{An \code{S3} class for storing persistence data}
 \usage{
 as_persistence(x, warn = TRUE, ...)
@@ -42,6 +45,12 @@ get_pairs(x, dimension, ...)
 \method{as.matrix}{persistence}(x, ...)
 
 \method{as.data.frame}{persistence}(x, row.names = NULL, optional = TRUE, ...)
+
+as_diagram(x, ...)
+
+\method{as_diagram}{persistence}(x, list = TRUE, ...)
+
+\method{as_diagram}{PHom}(x, list = TRUE, ...)
 }
 \arguments{
 \item{x}{An \code{R} object containing the persistence data to be coerced into an
@@ -89,6 +98,9 @@ which to recover a matrix of persistence pairs.}
     \code{optional} only for column names treatment, basically with the
     meaning of \code{\link[base]{data.frame}(*, check.names = !optional)}.
     See also the \code{make.names} argument of the \code{matrix} method.}
+
+\item{list}{Logical; whether to return the \code{diagram} object as the sole
+element of a list. Defaults to \code{TRUE} for consistency with the TDA package.}
 }
 \value{
 An object of class \code{\link{persistence}} which is a list of 2 elements:
@@ -145,6 +157,13 @@ as_persistence(x)
 get_pairs(x, dimension = 1)
 
 as.data.frame(x)
+
+# back and forth between `diagram` and `persistence`
+x <- tdaunif::sample_projective_plane(n = 12)
+( d <- TDA::alphaComplexDiag(x, maxdimension = 2) )
+( p <- as_persistence(d) )
+as_diagram(p)
+as_diagram(p, list = FALSE)
 
 # distances between cities
 euroclust <- hclust(eurodist, method = "ward.D")
