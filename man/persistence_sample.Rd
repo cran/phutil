@@ -14,7 +14,7 @@ persistence_sample
 A collection of 100 samples of size 100 on the sphere from which a
 persistence diagram is computed using the \code{\link[TDA:ripsDiag]{TDA::ripsDiag()}} function with
 parameters \code{maxdimension = 1L} and \code{maxscale = 1.6322}. Each diagram has been
-generated using the \code{\link[tdaunif:sphere]{tdaunif::sample_2sphere()}} function with the following
+generated using the \code{\link[tdaunif:sample_2sphere]{tdaunif::sample_2sphere()}} function with the following
 parameters: \code{n = 100} and \code{sd = 0.05}. The seed was fixed to 1234.
 }
 \keyword{datasets}

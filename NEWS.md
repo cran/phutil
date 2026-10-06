@@ -1,3 +1,13 @@
+# phutil 0.0.3
+
+## Bug fixes
+
+- Adjusted vendored Hera sources to explicitly include missing headers that are not pulled in transitively in latest clang versions; adapted R-CMD-check action to exercise this along the way (#62).
+  - Aligned vendored sources with upstream repository at https://github.com/animetov/hera; actually currently aligned with https://github.com/astamm/hera@r-compatibility with PR awaiting approval.
+  - Use a `configure` script to mirror the vendored Hera headers as *forwarding headers* in `inst/include` and generate `Makevars` from `Makevars.in` (via `abs_srcdir`) so the upstream `<hera/...>` includes resolve without modifying the vendored sources; a `cleanup` script then removes these generated artifacts, keeping them out of version control (see `src/README.md`).
+  - Define hera's `FOR_R_TDA` flag (in `src/Makevars.in`) to suppress the upstream `std::cerr`/`std::cout` diagnostics, satisfying R's requirement that compiled code not write to stdout/stderr.
+- `as_persistence.diagram()` would fail when the input was obtained through `do.call()`; it now continues without error, but with empty information about the engine (#58).
+
 # phutil 0.0.2
 
 ## New features

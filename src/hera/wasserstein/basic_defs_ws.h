@@ -45,8 +45,8 @@ derivative works thereof, in binary and source code form.
 #include <ciso646>
 #endif
 
-#include "../common.h"
-#include "../dnn/geometry/euclidean-dynamic.h"
+#include <hera/common.h>
+#include <hera/dnn/geometry/euclidean-dynamic.h>
 #include "def_debug_ws.h"
 #include "auction_params.h"
 

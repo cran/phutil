@@ -191,4 +191,8 @@ if (requireNamespace("ripserr", quietly = TRUE)) {
   expect_true(!is.list(as_diagram(h, list = FALSE)))
 }
 
+# tolerate `do.call()` input
+ph <- do.call(TDA::ripsDiag, c(list(X = x, maxdimension = 2, maxscale = 10)))
+expect_silent(as_persistence(ph))
+
 options(opts)

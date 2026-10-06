@@ -35,10 +35,10 @@ kantorovich_distance(
 }
 \arguments{
 \item{x}{Either a matrix of shape \eqn{n \times 2} or an object of class
-\link{persistence} specifying the first persistence diagram.}
+\code{\link{persistence}} specifying the first persistence diagram.}
 
 \item{y}{Either a matrix of shape \eqn{m \times 2} or an object of class
-\link{persistence} specifying the second persistence diagram.}
+\code{\link{persistence}} specifying the second persistence diagram.}
 
 \item{tol}{A numeric value specifying the relative error. Defaults to
 \code{sqrt(.Machine$double.eps)}. For the Bottleneck distance, it can be set to
@@ -53,7 +53,7 @@ performance reasons, but it is recommended to keep it \code{TRUE} for safety.}
 
 \item{dimension}{An integer value specifying the homology dimension for which
 to compute the distance. Defaults to \code{0L}. This is only used if \code{x} and \code{y}
-are objects of class \link{persistence}.}
+are objects of class \code{\link{persistence}}.}
 
 \item{p}{A numeric value specifying the power for the Wasserstein distance.
 Defaults to \code{1.0}.}
@@ -64,9 +64,10 @@ distance between the two persistence diagrams.
 }
 \description{
 This collection of functions computes the distance between two persistence
-diagrams of the same homology dimension. The diagrams must be represented as
-2-column matrices. The first column of the matrix contains the birth times
-and the second column contains the death times of the points.
+diagrams of the same homology dimension. The diagrams must be represented
+\code{\link{persistence}}-class objects or as 2-column matrices. Matrices are assumed
+to have the same homological degree, and the first and second columns to
+contain the birth values and the death values, respectively.
 }
 \details{
 A matching \eqn{\varphi : D_1 \to D_2} between persistence diagrams is a

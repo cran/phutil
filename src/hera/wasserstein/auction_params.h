@@ -8,7 +8,7 @@
 #include <ostream>
 #include <ios>
 
-#include "../common.h"
+#include <hera/common.h>
 
 namespace hera {
 

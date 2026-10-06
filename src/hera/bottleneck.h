@@ -36,7 +36,7 @@ derivative works thereof, in binary and source code form.
 #include <limits>
 #include <random>
 
-#include "common.h"
+#include <hera/common.h>
 #include "bottleneck/bottleneck_detail.h"
 #include "bottleneck/basic_defs_bt.h"
 #include "bottleneck/bound_match.h"

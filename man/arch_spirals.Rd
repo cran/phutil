@@ -14,7 +14,7 @@ arch_spirals
 A collection of 24 samples of size 120 on the arch spiral from which a
 persistence diagram is computed using the \code{\link[TDA:ripsDiag]{TDA::ripsDiag()}} function with
 \code{maxdimension = 2} and \code{maxscale = 6}. Each diagram has been generated using
-the \code{\link[tdaunif:arch-spirals]{tdaunif::sample_arch_spiral()}} function with the following parameters:
+the \code{\link[tdaunif:sample_arch_spiral]{tdaunif::sample_arch_spiral()}} function with the following parameters:
 \code{n = 120}, \verb{arms = 2`` and }sd = 0.05`. The seed was fixed to 28415.
 }
 \keyword{datasets}

@@ -1,0 +1,42 @@
+#!/bin/sh
+#
+# configure.win - Windows counterpart of ./configure (see configure for details).
+# Identical logic; Rtools provides the POSIX sh environment and find/sed/printf.
+
+set -e
+
+SRCDIR="${srcdir:-.}"
+case "$SRCDIR" in
+  /*) ABS_SRCDIR="$SRCDIR" ;;
+  *)  ABS_SRCDIR="$(cd "$SRCDIR" && pwd)" ;;
+esac
+
+HERA_SRC="$ABS_SRCDIR/src/hera"
+FWD_ROOT="$ABS_SRCDIR/inst/include/hera"
+
+rm -rf "$FWD_ROOT"
+
+for f in $(find "$HERA_SRC" -type f \( -name '*.h' -o -name '*.hpp' -o -name '*.hxx' \)); do
+  [ -n "$f" ] || continue
+  rel="${f#"$HERA_SRC"/}"
+  dest="$FWD_ROOT/$rel"
+  mkdir -p "$(dirname "$dest")"
+
+  nslashes=$(printf '%s' "$rel" | tr -cd '/' | wc -c | tr -d ' ')
+  up=
+  i=0
+  while [ "$i" -lt "$((nslashes + 3))" ]; do
+    up="../$up"
+    i=$((i + 1))
+  done
+
+  printf '// generated forwarding header - do not edit.\n' > "$dest"
+  printf '// Mirrors the vendored header src/hera/%s.\n' "$rel" >> "$dest"
+  printf '#include "%ssrc/hera/%s"\n' "$up" "$rel" >> "$dest"
+done
+
+INCLUDE_FLAG="-I\"$ABS_SRCDIR/inst/include\""
+sed "s|@INCLUDE_FLAG@|$INCLUDE_FLAG|" \
+  "$ABS_SRCDIR/src/Makevars.in" > "$ABS_SRCDIR/src/Makevars"
+
+echo "configure.win: generated hera forwarding headers under inst/include/hera"

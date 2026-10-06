@@ -1,0 +1,6 @@
+PKG_CXXFLAGS = $(SHLIB_OPENMP_CXXFLAGS)
+PKG_LIBS = $(SHLIB_OPENMP_CXXFLAGS)
+# FOR_R_TDA: hera's upstream hook that suppresses std::cerr/std::cout
+# diagnostics on error/debug branches (see e.g. bottleneck/bound_match.hpp),
+# satisfying R's "compiled code should not write to stdout/stderr" check.
+PKG_CPPFLAGS = @INCLUDE_FLAG@ -DFOR_R_TDA -DNO_LEGACY_NONAPI

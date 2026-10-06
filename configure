@@ -1,0 +1,63 @@
+#!/bin/sh
+#
+# configure
+#
+# The vendored hera sources in src/hera/ use angle-bracket includes such as
+#   #include <hera/common.h>
+# which assume an include root pointing at the directory *above* src/hera/.
+# To keep src/hera/** byte-identical to upstream, we do not edit those files.
+# Instead, this script:
+#   1. Generates a mirror of forwarding headers under inst/include/hera/,
+#      each of which #includes the real vendored header back in src/hera/.
+#   2. Writes src/Makevars (from src/Makevars.in) with an absolute -I to the
+#      generated mirror, so any `<hera/...>` include resolves.
+#
+# R runs configure from the package root with $srcdir set to the package
+# source directory; we turn it into an absolute path.
+
+set -e
+
+SRCDIR="${srcdir:-.}"
+case "$SRCDIR" in
+  /*) ABS_SRCDIR="$SRCDIR" ;;
+  *)  ABS_SRCDIR="$(cd "$SRCDIR" && pwd)" ;;
+esac
+
+HERA_SRC="$ABS_SRCDIR/src/hera"
+FWD_ROOT="$ABS_SRCDIR/inst/include/hera"
+
+# ---------------------------------------------------------------------------
+# 1. Generate forwarding headers mirroring every header under src/hera
+# ---------------------------------------------------------------------------
+rm -rf "$FWD_ROOT"
+
+for f in $(find "$HERA_SRC" -type f \( -name '*.h' -o -name '*.hpp' -o -name '*.hxx' \)); do
+  [ -n "$f" ] || continue
+  rel="${f#"$HERA_SRC"/}"                     # e.g. common/diagram_point.h
+  dest="$FWD_ROOT/$rel"
+  mkdir -p "$(dirname "$dest")"
+
+  # Number of "../" needed to climb from inst/include/hera/<rel-dir> back to
+  # the package root is 3 (hera -> include -> inst -> root) plus one for each
+  # subdirectory in rel.
+  nslashes=$(printf '%s' "$rel" | tr -cd '/' | wc -c | tr -d ' ')
+  up=
+  i=0
+  while [ "$i" -lt "$((nslashes + 3))" ]; do
+    up="../$up"
+    i=$((i + 1))
+  done
+
+  printf '// generated forwarding header - do not edit.\n' > "$dest"
+  printf '// Mirrors the vendored header src/hera/%s.\n' "$rel" >> "$dest"
+  printf '#include "%ssrc/hera/%s"\n' "$up" "$rel" >> "$dest"
+done
+
+# ---------------------------------------------------------------------------
+# 2. Write src/Makevars from src/Makevars.in with the absolute include path
+# ---------------------------------------------------------------------------
+INCLUDE_FLAG="-I\"$ABS_SRCDIR/inst/include\""
+sed "s|@INCLUDE_FLAG@|$INCLUDE_FLAG|" \
+  "$ABS_SRCDIR/src/Makevars.in" > "$ABS_SRCDIR/src/Makevars"
+
+echo "configure: generated hera forwarding headers under inst/include/hera"

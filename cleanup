@@ -1,0 +1,19 @@
+#!/bin/sh
+#
+# cleanup - reverse the side effects of ./configure.
+#
+# configure creates src/Makevars (from src/Makevars.in) and generates the
+# forwarding-header mirror under inst/include/hera/. These are build
+# artifacts; R CMD check requires a cleanup script whenever configure
+# writes src/Makevars, and we also remove the generated inst/include tree.
+
+set -e
+
+SRCDIR="${srcdir:-.}"
+case "$SRCDIR" in
+  /*) ABS_SRCDIR="$SRCDIR" ;;
+  *)  ABS_SRCDIR="$(cd "$SRCDIR" && pwd)" ;;
+esac
+
+rm -f "$ABS_SRCDIR/src/Makevars"
+rm -rf "$ABS_SRCDIR/inst/include"

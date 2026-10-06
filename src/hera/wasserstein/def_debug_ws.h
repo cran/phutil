@@ -35,7 +35,7 @@ derivative works thereof, in binary and source code form.
 // This symbol should be defined only in the version
 // for R package TDA, to comply with some CRAN rules
 // like no usage of cout, cerr, cin, exit, etc.
-#define FOR_R_TDA
+//#define FOR_R_TDA
 //
 //#define DEBUG_KDTREE_RESTR_ORACLE
 

@@ -14,6 +14,6 @@ trefoils
 A collection of 24 samples of size 120 on the trefoil from which a
 persistence diagram is computed using the \code{\link[TDA:ripsDiag]{TDA::ripsDiag()}} function with
 \code{maxdimension = 2} and \code{maxscale = 6}. Each diagram has been generated using the
-\code{\link[tdaunif:trefoil]{tdaunif::sample_trefoil()}} function with the following parameters: \code{n = 120} and \code{sd = 0.05}. The seed was fixed to 28415.
+\code{\link[tdaunif:sample_trefoil]{tdaunif::sample_trefoil()}} function with the following parameters: \code{n = 120} and \code{sd = 0.05}. The seed was fixed to 28415.
 }
 \keyword{datasets}

@@ -44,7 +44,7 @@ derivative works thereof, in binary and source code form.
 #include <assert.h>
 
 #include "def_debug_bt.h"
-#include "../common.h"
+#include <hera/common.h>
 #include <iostream>
 
 namespace hera {

@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+# cleanup.win - Windows counterpart of ./cleanup (see cleanup for details).
+# Reverses the side effects of ./configure.win.
+
+set -e
+
+SRCDIR="${srcdir:-.}"
+case "$SRCDIR" in
+  /*) ABS_SRCDIR="$SRCDIR" ;;
+  *)  ABS_SRCDIR="$(cd "$SRCDIR" && pwd)" ;;
+esac
+
+rm -f "$ABS_SRCDIR/src/Makevars"
+rm -rf "$ABS_SRCDIR/inst/include"

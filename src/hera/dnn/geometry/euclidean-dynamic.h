@@ -8,7 +8,7 @@
 #include <boost/serialization/vector.hpp>
 #include <cmath>
 
-#include "../../common/infinity.h"
+#include <hera/common/infinity.h>
 
 namespace hera
 {

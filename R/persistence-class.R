@@ -274,6 +274,8 @@ as_persistence.diagram <- function(x, warn = TRUE, ...) {
   bd_cols <- match(c("Birth", "Death"), info$dimnames[[2L]])
 
   filt_nm <- gsub("*Diag", "", rlang::call_name(info$call))
+  # when using `do.call()`, call does not include `TDA::*Diag()`
+  if (length(filt_nm) == 0L) filt_nm <- ""
   if (filt_nm == "rips") {
     filt_nm <- "Vietoris-Rips"
   }

@@ -50,7 +50,7 @@ performance reasons, but it is recommended to keep it \code{TRUE} for safety.}
 
 \item{dimension}{An integer value specifying the homology dimension for which
 to compute the distance. Defaults to \code{0L}. This is only used if \code{x} and \code{y}
-are objects of class \link{persistence}.}
+are objects of class \code{\link{persistence}}.}
 
 \item{ncores}{An integer value specifying the number of cores to use for
 parallel computation. Defaults to \code{1L}.}

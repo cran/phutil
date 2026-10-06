@@ -33,11 +33,11 @@ derivative works thereof, in binary and source code form.
 #include <ciso646>
 #endif
 
-#include "common/infinity.h"
-#include "common/hash_combine.h"
-#include "common/point.h"
-#include "common/diagram_point.h"
-#include "common/diagram_traits.h"
-#include "common/diagram_reader.h"
+#include <hera/common/infinity.h>
+#include <hera/common/hash_combine.h>
+#include <hera/common/point.h>
+#include <hera/common/diagram_point.h>
+#include <hera/common/diagram_traits.h>
+#include <hera/common/diagram_reader.h>
 
 #endif

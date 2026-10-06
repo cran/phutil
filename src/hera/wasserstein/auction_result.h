@@ -5,7 +5,7 @@
 #include <cmath>
 #include <ostream>
 
-#include "../common.h"
+#include <hera/common.h>
 
 namespace hera {
 
